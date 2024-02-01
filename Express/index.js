@@ -1,4 +1,5 @@
 var express = require('express')
+const { Sequelize } = require('sequelize');
 // importing express module in to our app
 
 var app = express()
@@ -9,7 +10,7 @@ var orders = require("./routes/orders")
 
 
 app.use("/products", products)
-app.use("/orders",orders)
+app.use("/orders", orders)
 
 // initializing app using express
 
@@ -21,6 +22,19 @@ app.use("/orders",orders)
 app.get("/getPort", (req, res) => {
     res.send("Hello World")
 })
+
+
+const sequelize = new Sequelize('database', 'username', 'password', {
+    host: 'localhost',
+    dialect: 'postgres'
+})
+
+try {
+    sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+} catch (error) {
+    console.error('Unable to connect to the database:', error);
+}
 
 
 //it's becomes messy
